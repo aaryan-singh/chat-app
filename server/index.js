@@ -12,8 +12,19 @@ const io = socketio(server);
 
 app.use(router);
 
-io.on("connection", (socket) => {
+io.on("connection", socket => {
   console.log("We have a new connection"); // when a new socket connects on the client side
+
+  socket.on("join", ({ name, room }, callback) => {
+    console.log(name, room);
+    const error = true;
+    if (error) {
+      callback({
+        error: "error"
+      });
+    }
+  });
+
   socket.on("disconnect", () => console.log("User has left")); // on disconnecting
 });
 
